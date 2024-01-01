@@ -1,0 +1,2 @@
+(()=>{document.getElementById("termly-display-banner-toggle").addEventListener("change",e);async function e(e){let t=e.target.checked;e.target.disabled=!0,await fetch(termly_consent_toggle.update_url,{method:"POST",cache:"no-cache",headers:{"Content-Type":"application/json"},body:JSON.stringify({_wpnonce:termly_consent_toggle.nonce,active:t})}).then(e=>e.json()).then(t=>{e.target.disabled=!1})}})();
+//# sourceMappingURL=consent-toggle.js.map

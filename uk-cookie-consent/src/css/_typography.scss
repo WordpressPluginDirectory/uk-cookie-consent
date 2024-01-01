@@ -1,0 +1,65 @@
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src:url("../fonts/roboto/Roboto-Regular-webfont.eot");
+	src:url("../fonts/roboto/Roboto-Regular-webfont.eot?#iefix") format("embedded-opentype"),
+		url("../fonts/roboto/Roboto-Regular-webfont.woff") format("woff"),
+		url("../fonts/roboto/Roboto-Regular-webfont.ttf") format("truetype"),
+		url("../fonts/roboto/Roboto-Regular-webfont.svg#termly") format("svg");
+}
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src:url("../fonts/roboto/Roboto-Medium-webfont.eot");
+	src:url("../fonts/roboto/Roboto-Medium-webfont.eot?#iefix") format("embedded-opentype"),
+		url("../fonts/roboto/Roboto-Medium-webfont.woff") format("woff"),
+		url("../fonts/roboto/Roboto-Medium-webfont.ttf") format("truetype"),
+		url("../fonts/roboto/Roboto-Medium-webfont.svg#termly") format("svg");
+}
+
+.termly {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+
+	h1, h2 {
+		font-weight: 500;
+	}
+
+	h1 {
+		color: #212529;
+		font-size: 1.5rem;
+		letter-spacing: 0;
+		line-height: 2rem;
+	}
+
+	h2 {
+		color: #212529;
+		font-size: 1.25rem;
+		letter-spacing: 0;
+		line-height: 1.75rem;
+	}
+
+	h3, * {
+		color: #212529;
+		font-size: 0.875rem;
+		letter-spacing: 0;
+		line-height: 1.25rem;
+	}
+
+	h4, caption {
+		color: #212529;
+		font-size: 0.75rem;
+		letter-spacing: 0;
+		line-height: 1rem;
+	}
+
+	* {
+		color: #6d7782;
+	}
+
+}
