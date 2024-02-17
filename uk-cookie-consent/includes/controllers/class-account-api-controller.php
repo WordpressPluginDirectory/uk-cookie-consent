@@ -1,9 +1,22 @@
 <?php
+/**
+ * Account API Controller
+ *
+ * @package UKCookieConsent
+ */
 
 namespace termly;
 
+/**
+ * Account API Controller class.
+ */
 class Account_API_Controller {
 
+	/**
+	 * Hooks into WordPress for this class.
+	 *
+	 * @return void
+	 */
 	public static function hooks() {
 
 		// Listen for remote updates.
@@ -15,6 +28,11 @@ class Account_API_Controller {
 
 	}
 
+	/**
+	 * Adds the rewrite rule for the account status endpoint.
+	 *
+	 * @return void
+	 */
 	public static function add_rewrite_rule() {
 
 		register_rest_route(
@@ -29,6 +47,11 @@ class Account_API_Controller {
 
 	}
 
+	/**
+	 * Maybe schedule the cron job.
+	 *
+	 * @return void
+	 */
 	public static function maybe_schedule_cron() {
 
 		if ( ! wp_next_scheduled( 'termly_account_update' ) || ( is_admin() && isset( $_REQUEST['update-account'] ) ) ) {
@@ -39,6 +62,11 @@ class Account_API_Controller {
 
 	}
 
+	/**
+	 * Update the account status.
+	 *
+	 * @return WP_REST_Response
+	 */
 	public static function update_account_status() {
 
 		$banner_key            = 'termly_banner';
@@ -75,15 +103,19 @@ class Account_API_Controller {
 
 		} else {
 
-			error_log( print_r( [ $response ], true ) );
-			wp_send_json_error();
+			return rest_ensure_response( [ 'message' => __( 'Failed to update account status.', 'uk-cookie-consent' ) ] );
 
 		}
 
-		wp_send_json_success();
+		return rest_ensure_response( [ 'message' => __( 'Account status updated.', 'uk-cookie-consent' ) ] );
 
 	}
 
+	/**
+	 * Check if the plugin is using a free account to communicate with the API.
+	 *
+	 * @return bool
+	 */
 	public static function is_free() {
 
 		$website = get_option( 'termly_website', (object) [ 'active_subscription' => false ] );

@@ -4,17 +4,11 @@ Tags: cookie law, cookie consent, gdpr, eu privacy directive, cookie banner, coo
 Requires at least: 5.2
 Requires PHP: 5.6
 Tested up to: 6.2
-Stable tag: 3.1.1
+Stable tag: 3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
-
-New in 3.1:
-- Simplified the Autoblocker and custom blocking map behaviour under Banner Settings to a no-code solution
-- Added 3 additional policies: EULA, Shipping, Acceptable Use
-- Improved banner control accessibility by moving the toggle out of Banner Settings and into a persistent location in the top right of the screen
-- Minor UI improvements for readability
 
 Termly's GDPR Cookie Consent Banner is one of the easiest, most effective, and popular cookie consent plugins available for WordPress. Get help complying with data privacy laws and regulations like the GDPR, UK GDPR, CCPA, the ePrivacy Directive (EU Cookie Law), and the UK's Privacy and Electronic Communications Regulations (PECR) with a custom cookie consent banner and cookie policy offered through Termly.
 
@@ -124,6 +118,11 @@ The free plan has a 10,000 monthly unique visitor limit to your consent banner. 
 9. Enable/disable your consent banner with a single click within WordPress. Easily control whether or not the Auto Blocker is enabled.
 
 == Changelog ==
+
+= 3.2 =
+* New: There is a new setting on the site scan page to add a specific allow line to an existing or virtual (provided by WordPress core) robots.txt file.
+* Update: Changed the text of the "allow" line in the robots.txt to accurately reflect the new scraper's name.
+* Removed: The plugin will no longer automatically save the "allow" line to the robots.txt file when regenerating rewrite rules.
 
 = 3.1.1 =
 * Update: Updates the embed script on the consent banner to include some additional information needed for European privacy framework.

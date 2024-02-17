@@ -20,7 +20,6 @@ class Robots_Txt {
 	public static function hooks() {
 
 		\add_filter( 'robots_txt', [ __CLASS__, 'virtual' ], 10, 1 );
-		\add_action( 'generate_rewrite_rules', [ __CLASS__, 'check_file' ] );
 
 	}
 
@@ -30,9 +29,10 @@ class Robots_Txt {
 	 * @param  string $file The file content.
 	 * @return string $file
 	 */
-	public static function virtual( $file ) {
+	public static function virtual( $file = '' ) {
 
-		return 'User-agent: Scrapy
+		return '# Termly scanner
+User-agent: TermlyBot
 Allow: /
 
 ' . $file;
@@ -40,15 +40,11 @@ Allow: /
 	}
 
 	/**
-	 * Check for an actual robots.txt file.
-	 * Fired after rewrite rules are flushed.
-	 * We needed a place where users could trigger this.
-	 *
-	 * @param WP_Rewrite $rules The WP_Rewrite object.
+	 * Check for an actual robots.txt file and add the allow line.
 	 *
 	 * @return void
 	 */
-	public static function check_file( $rules ) {
+	public static function add_allow_line() {
 
 		// Include filesystem functionality.
 		require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -86,9 +82,17 @@ Allow: /
 
 		// Check to see if the robots file already has the rule.
 		$robots_content = $wp_filesystem->get_contents( $robots_path );
-		$robots_rule = 'User-agent: Scrapy
+		$scrapy_rule    = '/User-agent: Scrapy\nAllow: \//';
+		$robots_rule    = '# Termly scanner
+User-agent: TermlyBot
 Allow: /';
 
+		// Remove the Scrapy rule if it exists.
+		if ( 1 === preg_match( $scrapy_rule, $robots_content ) ) {
+			$robots_content = preg_replace( $scrapy_rule, '', $robots_content );
+		}
+
+		// Check if the termly bot rule already exists.
 		if ( false !== strpos( $robots_content, $robots_rule ) ) {
 			return;
 		}
@@ -96,6 +100,61 @@ Allow: /';
 		$robots_content = $robots_rule . '
 
 ' . $robots_content;
+
+		// Prepend the rule. Robots file is read top to bottom.
+		$wp_filesystem->put_contents( $robots_path, $robots_content, FS_CHMOD_FILE );
+
+	}
+
+	/**
+	 * Check for an actual robots.txt file with the allo wline and remove it.
+	 *
+	 * @return void
+	 */
+	public static function remove_allow_line() {
+
+		// Include filesystem functionality.
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+
+		// Check that the robots file exists.
+		$robots_path = ABSPATH . '/robots.txt';
+		if ( ! file_exists( $robots_path ) || ! is_file( $robots_path ) ) {
+			return;
+		}
+
+		// Initialize the filesystem API.
+		global $wp_filesystem;
+
+		$url = \wp_nonce_url(
+			\add_query_arg(
+				[
+					'page' => 'termly',
+				],
+				\admin_url( 'admin.php' )
+			),
+			'termly-robots-nonce'
+		);
+
+		// Create and test creds.
+		$creds = \request_filesystem_credentials( $url, '', false, false, null );
+		if ( false === $creds ) {
+			return;
+		}
+
+		if ( ! \WP_Filesystem( $creds ) ) {
+			// Prompt user to enter credentials.
+			\request_filesystem_credentials( $url, '', true, false, null );
+			return;
+		}
+
+		// Check to see if the robots file already has the rule.
+		$robots_content = $wp_filesystem->get_contents( $robots_path );
+		$rules          = '/(User-agent: Scrapy\nAllow: \/|# Termly scanner\nUser-agent: TermlyBot\nAllow: \/)/';
+
+		// Remove the Scrapy rule if it exists.
+		if ( 1 === preg_match( $rules, $robots_content ) ) {
+			$robots_content = preg_replace( $rules, '', $robots_content );
+		}
 
 		// Prepend the rule. Robots file is read top to bottom.
 		$wp_filesystem->put_contents( $robots_path, $robots_content, FS_CHMOD_FILE );

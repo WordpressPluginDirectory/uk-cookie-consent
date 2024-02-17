@@ -171,8 +171,9 @@ class Banner_Settings_Controller extends Menu_Controller {
 			'termly/v1',
 			'/consent-toggle',
 			[
-				'methods'  => 'POST',
-				'callback' => [ __CLASS__, 'handle_consent_toggle' ],
+				'methods'             => 'POST',
+				'callback'            => [ __CLASS__, 'handle_consent_toggle' ],
+				'permission_callback' => '__return_true',
 			]
 		);
 

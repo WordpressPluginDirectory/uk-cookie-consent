@@ -12,6 +12,13 @@ namespace termly;
  */
 class Site_Scan_Model {
 
+	/**
+	 * Sanitize the site scan settings.
+	 *
+	 * @param array $value The value to sanitize.
+	 *
+	 * @return array
+	 */
 	public static function sanitize_site_scan( $value ) {
 
 		static $pass_count = 0;
@@ -21,8 +28,9 @@ class Site_Scan_Model {
 		$value = wp_parse_args(
 			$value,
 			[
-				'enabled'   => 0,
-				'frequency' => 'trimonthly',
+				'enabled'    => 0,
+				'frequency'  => 'trimonthly',
+				'robots_txt' => 0,
 			]
 		);
 
@@ -30,8 +38,27 @@ class Site_Scan_Model {
 
 			if ( '' !== $value ) {
 
-				$response = Termly_API_Controller::call( 'PUT', 'website/scan_settings', [ 'scan_enabled' => boolval( $value['enabled'] ), 'scan_period' => $value['frequency'], ] );
+				// Save the settings to the API.
+				$response = Termly_API_Controller::call(
+					'PUT',
+					'website/scan_settings',
+					[
+						'scan_enabled' => boolval( $value['enabled'] ),
+						'scan_period'  => $value['frequency'],
+					]
+				);
 				if ( 200 === wp_remote_retrieve_response_code( $response ) && ! is_wp_error( $response ) ) {
+
+					// If the robots.txt setting is enabled and the robots.txt file exists.
+					if ( 1 === intval( $value['robots_txt'] ) ) {
+
+						\termly\Robots_Txt::add_allow_line();
+
+					} else {
+
+						\termly\Robots_Txt::remove_allow_line();
+
+					}
 
 					$type = 'updated';
 					if ( false === get_option( 'termly_site_scan' ) ) {

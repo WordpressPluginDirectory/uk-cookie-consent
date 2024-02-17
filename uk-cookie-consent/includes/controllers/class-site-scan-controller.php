@@ -12,8 +12,16 @@ namespace termly;
  */
 class Site_Scan_Controller extends Menu_Controller {
 
+	/**
+	 * The last request made to the API.
+	 *
+	 * @var \WP_Error
+	 */
 	private static $last_request = null;
 
+	/**
+	 * Register the hooks for the class.
+	 */
 	public static function hooks() {
 
 		// Handle new scan request.
@@ -34,10 +42,19 @@ class Site_Scan_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Register the settings and fields for the Site Scan.
+	 */
 	public static function register_settings() {
 
 		// Register the API Key Setting.
-		register_setting( 'termly_site_scan', 'termly_site_scan', [ 'sanitize_callback' => [ new Site_Scan_Model, 'sanitize_site_scan' ] ] );
+		register_setting(
+			'termly_site_scan',
+			'termly_site_scan',
+			[
+				'sanitize_callback' => [ new Site_Scan_Model, 'sanitize_site_scan' ],
+			]
+		);
 
 		// Add a section to the Settings API.
 		add_settings_section(
@@ -55,13 +72,29 @@ class Site_Scan_Controller extends Menu_Controller {
 			'termly_site_scan_section'
 		);
 
+		add_settings_field(
+			'termly_robots_txt',
+			__( 'Robots.txt', 'uk-cookie-consent' ),
+			[ __CLASS__, 'robots_txt_field' ],
+			'termly_site_scan',
+			'termly_site_scan_section'
+		);
+
 	}
 
+	/**
+	 * Output the section header.
+	 *
+	 * @param array $args The arguments for the section.
+	 */
 	public static function section_header( $args = [] ) {
 		// Don't output a heading.
 	}
 
-	public static function site_scan_field( $args = [] ) {
+	/**
+	 * Output the Site Scan field.
+	 */
+	public static function site_scan_field() {
 
 		$feature_set_cache_key = 'termly-feature-set';
 		$feature_set           = get_transient( $feature_set_cache_key );
@@ -106,6 +139,33 @@ class Site_Scan_Controller extends Menu_Controller {
 		<?php
 	}
 
+	/**
+	 * Output the Robots.txt field.
+	 */
+	public static function robots_txt_field() {
+
+		$site_scan = get_option(
+			'termly_site_scan',
+			[
+				'robots_txt' => 0,
+			]
+		);
+		$site_scan = wp_parse_args( $site_scan, [ 'robots_txt' => 0 ] );
+		?>
+		<p><label class="checkbox-container" for="termly-site-scan-robots-txt">
+			<input type="checkbox" name="termly_site_scan[robots_txt]" id="termly-site-scan-robots-txt" value="1" <?php checked( 1, $site_scan['robots_txt'] ); ?>>
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path class="border" d="M3.5 6C3.5 4.61929 4.61929 3.5 6 3.5H18C19.3807 3.5 20.5 4.61929 20.5 6V18C20.5 19.3807 19.3807 20.5 18 20.5H6C4.61929 20.5 3.5 19.3807 3.5 18V6Z" fill="white" stroke="#CED4DA"/>
+				<path class="checkmark" fill-rule="evenodd" clip-rule="evenodd" d="M15.4937 9.25628C15.8383 8.91457 16.397 8.91457 16.7416 9.25628C17.0861 9.59799 17.0861 10.152 16.7416 10.4937L11.4474 15.7437C11.1029 16.0854 10.5442 16.0854 10.1996 15.7437L7.25844 12.8271C6.91385 12.4853 6.91385 11.9313 7.25844 11.5896C7.60302 11.2479 8.16169 11.2479 8.50627 11.5896L10.8235 13.8876L15.4937 9.25628Z" fill="#4672FF"/>
+			</svg>
+			<span><?php esc_html_e( 'Add Termly Scanner to robots.txt Allow list', 'uk-cookie-consent' ); ?></span>
+		</label></p>
+		<?php
+	}
+
+	/**
+	 * Add the Site Scan submenu item.
+	 */
 	public static function menu() {
 
 		add_submenu_page(
@@ -119,12 +179,18 @@ class Site_Scan_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Output the Site Scan page.
+	 */
 	public static function menu_page() {
 
 		require_once TERMLY_VIEWS . 'site-scan.php';
 
 	}
 
+	/**
+	 * Make a call out to the Termly API to initiate a new scan.
+	 */
 	public static function handle_new_scan_request() {
 
 		self::$last_request = Termly_API_Controller::call( 'POST', 'website/scan_cookie' );
@@ -132,6 +198,9 @@ class Site_Scan_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Output the new scan notice.
+	 */
 	public static function new_scan_notice() {
 
 		if ( 204 === wp_remote_retrieve_response_code( self::$last_request ) && ! is_wp_error( self::$last_request ) ) {
@@ -167,6 +236,9 @@ class Site_Scan_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Output the update notice.
+	 */
 	public static function maybe_update_notice() {
 
 		global $current_screen;
@@ -174,7 +246,7 @@ class Site_Scan_Controller extends Menu_Controller {
 		$site_scan = get_option(
 			'termly_site_scan',
 			[
-				'enabled'   => 0,
+				'enabled' => 0,
 			]
 		);
 
@@ -206,6 +278,11 @@ class Site_Scan_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Get the last scanned date.
+	 *
+	 * @return string
+	 */
 	public static function get_last_scanned() {
 
 		$website = get_option( 'termly_website', (object) [ 'current_report_updated_at' => __( 'No Scans Available', 'uk-cookie-consent' ) ] );

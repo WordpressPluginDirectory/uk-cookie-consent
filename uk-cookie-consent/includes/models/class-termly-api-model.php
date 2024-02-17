@@ -83,10 +83,6 @@ class Termly_API_Model {
 
 			}
 
-		} else {
-
-			error_log( print_r( [ $response ], true ) );
-
 		}
 
 	}

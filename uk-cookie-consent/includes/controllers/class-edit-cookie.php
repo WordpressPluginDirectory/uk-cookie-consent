@@ -7,7 +7,7 @@
 
 namespace termly;
 
-// If the Termly API Controller has not been included
+// If the Termly API Controller has not been included.
 if ( ! class_exists( 'Termly_API_Controller' ) ) {
 	require_once TERMLY_CONTROLLERS . 'class-termly-api-controller.php';
 }
@@ -17,10 +17,15 @@ if ( ! class_exists( 'Termly_API_Controller' ) ) {
  */
 class Edit_Cookie {
 
+	/**
+	 * The name prefix for ids.
+	 *
+	 * @var string
+	 */
 	public static $name_prefix = 'termly-edit-cookie-';
 
 	/**
-	 * hooks    Hooks into WordPress for this class
+	 * Hooks into WordPress for this class.
 	 *
 	 * @return void
 	 */
@@ -32,14 +37,14 @@ class Edit_Cookie {
 	}
 
 	/**
-	 * edit_page    Adds submenu page for edit page with no parent
+	 * Adds submenu page for edit page with no parent.
 	 *
 	 * @return void
 	 */
 	public static function edit_page() {
 
 		add_submenu_page(
-			null,
+			'admin.php',
 			__( 'Edit Cookie', 'uk-cookie-consent' ),
 			'',
 			'manage_options',
@@ -50,33 +55,33 @@ class Edit_Cookie {
 	}
 
 	/**
-	 * edit_page_view    The view for the edit page.
+	 * The view for the edit page.
 	 * Also triggers edit/add functionality if action is set
 	 *
 	 * @return void
 	 */
 	public static function edit_page_view() {
 
-		// Handle editing or adding a cookie if there is an action set in the request
+		// Handle editing or adding a cookie if there is an action set in the request.
 		if ( isset( $_REQUEST['action'] ) ) {
 			$status = self::handle_crud();
 		}
 
 		// Whether this is editing or adding new
-		// Cookie ID is only set if we are editing
+		// Cookie ID is only set if we are editing.
 		$editing = isset( $_GET['cookie_id'] );
 
-		// Name prefix for ids
+		// Name prefix for ids.
 		$name_prefix = self::$name_prefix;
 
 		// If a cookie has been added, an additional
-		// array value is added which is the cookie id
+		// array value is added which is the cookie id.
 		if ( isset( $status ) && 3 === count( $status ) ) {
 			$cookie_id = $status[2];
 			$editing = true;
 		}
 
-		// By default, cookie is set to false
+		// By default, cookie is set to false.
 		$cookie = false;
 
 		if ( $editing ) {
@@ -116,22 +121,20 @@ class Edit_Cookie {
 	}
 
 	/**
-	 * handle_crud    Handle editing and adding a cookie
+	 * Handle editing and adding a cookie
 	 *
 	 * @return array [0] is success/error [1] is message [2] (optional) is cookie id
 	 */
 	public static function handle_crud() {
 
-		if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'termly_cookie_nonce' ) ) {
+		if ( ! isset( $_REQUEST['_wpnonce'], $_REQUEST['action'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'termly_cookie_nonce' ) ) {
 			die();
 		}
 
-		$action = sanitize_text_field( $_REQUEST['action'] );
+		$action = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) );
 
-		// Check for required fields
-		$required_fields = [
-			'name', 'category', 'domain',
-		];
+		// Check for required fields.
+		$required_fields = [ 'name', 'category', 'domain' ];
 
 		foreach ( $required_fields as $field ) {
 			if ( ! isset( $_REQUEST[ $field ] ) || '' === $_REQUEST[ $field ] ) {
@@ -142,36 +145,29 @@ class Edit_Cookie {
 			}
 		}
 
-		// Delete the transient which stores cookie list
+		// Delete the transient which stores cookie list.
 		delete_transient( 'termly-site-scan-results' );
 
-		// Arguments for edit/add cookie
-		$arg_keys = [
-			'name', 'category', 'expire', 'tracker_type',
-			'country', 'domain', 'service', 'service_policy_link',
-			'source', 'value', 'en_us',
-		];
+		// Arguments for edit/add cookie.
+		$arg_keys = [ 'name', 'category', 'expire', 'tracker_type', 'country', 'domain', 'service', 'service_policy_link', 'source', 'value', 'en_us' ];
 
 		$args = [];
 
-		// Add arguments of they are set
+		// Add arguments of they are set.
 		foreach ( $arg_keys as $key ) {
 			if ( ! isset( $_REQUEST[ $key ] ) ) {
 				continue;
 			}
-			$args[ $key ] = sanitize_text_field( $_REQUEST[ $key ] );
+			$args[ $key ] = sanitize_text_field( wp_unslash( $_REQUEST[ $key ] ) );
 		}
 
-		// Unslash the args
-		$args = wp_unslash( $args );
-
-		// Edit a cookie
+		// Edit a cookie.
 		if ( 'edit' === $action ) {
 			$status = self::edit_cookie( $args );
 			return $status;
 		}
 
-		// Add a cookie
+		// Add a cookie.
 		if ( 'add' === $action ) {
 			$status = self::add_cookie( $args );
 			return $status;
@@ -182,18 +178,18 @@ class Edit_Cookie {
 	}
 
 	/**
-	 * edit_cookie
+	 * Store the cookie and return the status.
 	 *
-	 * @param  array $args Post arguments
+	 * @param  array $args Post arguments All posted arguments.
 	 *
 	 * @return array [0] is success/error [1] is message [2] is cookie id
 	 */
 	public static function edit_cookie( $args ) {
 
-		// These fields cannot be edited
-		$non_editable_fields = [ 'name', 'expire', 'tracker_type', 'domain', ];
+		// These fields cannot be edited.
+		$non_editable_fields = [ 'name', 'expire', 'tracker_type', 'domain' ];
 
-		// Loop through and remove non editable fields if they are set
+		// Loop through and remove non editable fields if they are set.
 		foreach ( $non_editable_fields as $field ) {
 			if ( ! isset( $args[ $field ] ) ) {
 				continue;
@@ -201,22 +197,31 @@ class Edit_Cookie {
 			unset( $args[ $field ] );
 		}
 
-		// Get the cookie ID
+		if ( ! isset( $_REQUEST['cookie_id'] ) ) {
+			return [
+				'error',
+				__( 'Cookie not found', 'uk-cookie-consent' ),
+			];
+		}
+
+		// Get the cookie ID.
 		$cookie_id = intval( $_REQUEST['cookie_id'] );
 
-		// PUT request to the API
+		// PUT request to the API.
 		$response = Termly_API_Controller::call( 'PUT', 'cookies/' . $cookie_id, $args );
 
 		if ( 200 === wp_remote_retrieve_response_code( $response ) && ! is_wp_error( $response ) ) {
-			// Return success
+
+			// Return success.
 			return [
 				'success',
 				__( 'Cookie updated', 'uk-cookie-consent' ),
 				$cookie_id,
 			];
+
 		}
 
-		// Return failure
+		// Return failure.
 		return [
 			'error',
 			__( 'Cookie update failed', 'uk-cookie-consent' ),
@@ -249,7 +254,7 @@ class Edit_Cookie {
 			];
 
 			// If not adding another, set cookie id to go to edit screen.
-			if ( 'add_another' !== $_REQUEST['submit'] ) {
+			if ( isset( $_REQUEST['submit'] ) && 'add_another' !== sanitize_text_field( wp_unslash( $_REQUEST['submit'] ) ) ) {
 				$success[] = intval( $cookie_id );
 			}
 
@@ -267,16 +272,20 @@ class Edit_Cookie {
 	/**
 	 * Highlight the "Cookie Management" submenu page when on the edit cookie page
 	 *
-	 * @param  string $parent
+	 * @param  string $parent_page The slug of the parent page.
 	 *
 	 * @return string
 	 */
-	public static function highlight( $parent ) {
+	public static function highlight( $parent_page ) {
+
 		global $plugin_page;
 		if ( 'termly-edit-cookie' === $plugin_page ) {
-			$plugin_page = 'cookie-management';
+
+			$plugin_page = 'cookie-management'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+
 		}
-		return $parent;
+		return $parent_page;
+
 	}
 
 }
