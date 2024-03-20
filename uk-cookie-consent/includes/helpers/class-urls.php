@@ -1,9 +1,22 @@
 <?php
+/**
+ * This file contains the Urls class.
+ *
+ * @package termly
+ */
 
 namespace termly;
 
+/**
+ * This class contains all the URL helpers for the plugin.
+ */
 class Urls {
 
+	/**
+	 * Get the disconnect URL.
+	 *
+	 * @return string
+	 */
 	public static function get_disconnect_url() {
 
 		return wp_nonce_url(
@@ -19,6 +32,12 @@ class Urls {
 
 	}
 
+	/**
+	 * Get the plans URL.
+	 *
+	 * @param string $campaign The current campaign.
+	 * @return string
+	 */
 	public static function get_plans_url( $campaign = 'site-scan' ) {
 
 		return add_query_arg(
@@ -33,6 +52,12 @@ class Urls {
 
 	}
 
+	/**
+	 * Get the compare plans URL.
+	 *
+	 * @param string $campaign The current campaign.
+	 * @return string
+	 */
 	public static function get_compare_plans_url( $campaign = 'site-scan' ) {
 
 		return add_query_arg(
@@ -46,6 +71,11 @@ class Urls {
 
 	}
 
+	/**
+	 * Get the new cookie URL.
+	 *
+	 * @return string
+	 */
 	public static function get_new_cookie_url() {
 
 		return add_query_arg(
@@ -57,6 +87,11 @@ class Urls {
 
 	}
 
+	/**
+	 * Get the sign up URL.
+	 *
+	 * @return string
+	 */
 	public static function get_sign_up_url() {
 
 		return add_query_arg(
@@ -69,6 +104,11 @@ class Urls {
 
 	}
 
+	/**
+	 * Get the scan URL.
+	 *
+	 * @return string
+	 */
 	public static function get_scan_url() {
 
 		return add_query_arg(
@@ -80,6 +120,11 @@ class Urls {
 
 	}
 
+	/**
+	 * Get the cookie management URL.
+	 *
+	 * @return string
+	 */
 	public static function get_cookie_management_url() {
 
 		return add_query_arg(
@@ -92,11 +137,11 @@ class Urls {
 	}
 
 	/**
-	 * get_edit_cookie_link
+	 * Get the cookie management URL.
 	 *
 	 * @param int $item_id The current cookie id.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public static function get_edit_cookie_link( $item_id ) {
 		return add_query_arg(
@@ -108,6 +153,14 @@ class Urls {
 		);
 	}
 
+	/**
+	 * Get the delete cookie URL.
+	 *
+	 * @param int   $item_id The current cookie id.
+	 * @param array $args The current args.
+	 *
+	 * @return string
+	 */
 	public static function get_delete_cookie_link( $item_id, $args ) {
 
 		return add_query_arg(
@@ -116,7 +169,7 @@ class Urls {
 				'action'           => 'delete',
 				'cookie'           => $item_id,
 				'_wpnonce'         => wp_create_nonce( 'bulk-' . $args['plural'] ),
-				'_wp_http_referer' => remove_query_arg( [ 'action', 'action2', 'cookie', ], $_SERVER['REQUEST_URI'] ),
+				'_wp_http_referer' => remove_query_arg( [ 'action', 'action2', 'cookie' ], $_SERVER['REQUEST_URI'] ),
 			],
 			admin_url( 'admin.php' )
 		);

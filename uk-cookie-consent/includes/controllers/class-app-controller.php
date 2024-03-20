@@ -12,6 +12,11 @@ namespace termly;
  */
 class App_Controller extends Menu_Controller {
 
+	/**
+	 * Hooks into WordPress for this class.
+	 *
+	 * @return void
+	 */
 	public static function hooks() {
 
 		// Register and enqueue global admin styles.
@@ -28,6 +33,11 @@ class App_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Register and enqueue global admin styles.
+	 *
+	 * @return void
+	 */
 	public static function admin_global_styles() {
 
 		wp_register_style(
@@ -40,6 +50,11 @@ class App_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Register the menu.
+	 *
+	 * @return void
+	 */
 	public static function menu() {
 
 		add_menu_page(
@@ -61,12 +76,25 @@ class App_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * The main menu page output.
+	 *
+	 * @return void
+	 */
 	public static function menu_page() {
 
 		require_once TERMLY_VIEWS . 'main-menu.php';
 
 	}
 
+	/**
+	 * Add action link to plugin listing.
+	 *
+	 * @param array  $links The current links array.
+	 * @param string $file The current file.
+	 *
+	 * @return array
+	 */
 	public static function add_action_link( $links, $file ) {
 
 		if ( Account_API_Controller::is_free() ) {
@@ -80,6 +108,11 @@ class App_Controller extends Menu_Controller {
 		return $links;
 	}
 
+	/**
+	 * Reset all Termly data.
+	 *
+	 * @return mixed
+	 */
 	public static function reset_all() {
 
 		if (

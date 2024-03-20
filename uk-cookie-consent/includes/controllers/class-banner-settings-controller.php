@@ -12,6 +12,11 @@ namespace termly;
  */
 class Banner_Settings_Controller extends Menu_Controller {
 
+	/**
+	 * Hooks into WordPress for this class.
+	 *
+	 * @return void
+	 */
 	public static function hooks() {
 
 		add_action( 'admin_menu', [ __CLASS__, 'menu' ] );
@@ -25,6 +30,11 @@ class Banner_Settings_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Register the menu.
+	 *
+	 * @return void
+	 */
 	public static function menu() {
 
 		add_submenu_page(
@@ -38,12 +48,23 @@ class Banner_Settings_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Render the menu page output.
+	 *
+	 * @return void
+	 */
 	public static function menu_page() {
 
 		require_once TERMLY_VIEWS . 'banner-settings.php';
 
 	}
 
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @param string $hook The current page hook.
+	 * @return void
+	 */
 	public static function scripts( $hook ) {
 
 		$screen = get_current_screen();
@@ -62,7 +83,7 @@ class Banner_Settings_Controller extends Menu_Controller {
 				'termly-consent-toggle',
 				'termly_consent_toggle',
 				[
-					'nonce'      => wp_create_nonce( 'termly-consent-toggle' ),
+					'nonce'      => wp_create_nonce( 'wp_rest' ),
 					'update_url' => rest_url( 'termly/v1/consent-toggle' ),
 				]
 			);
@@ -104,7 +125,7 @@ class Banner_Settings_Controller extends Menu_Controller {
 			'termly_banner_settings',
 			'termly_banner_settings',
 			[
-				'sanitize_callback' => [ __CLASS__, 'sanitize_settings' ]
+				'sanitize_callback' => [ __CLASS__, 'sanitize_settings' ],
 			]
 		);
 
@@ -137,7 +158,16 @@ class Banner_Settings_Controller extends Menu_Controller {
 		if ( ! is_array( $dirty ) || empty( $dirty ) ) {
 			update_option( 'termly_display_auto_blocker', 'off' );
 			update_option( 'termly_display_custom_map', 'off' );
-			update_option( 'termly_custom_blocking_map', [ 'essential' => '', 'advertising' => '', 'analytics' => '', 'performance' => '', 'social' => '' ] );
+			update_option(
+				'termly_custom_blocking_map',
+				[
+					'essential'   => '',
+					'advertising' => '',
+					'analytics'   => '',
+					'performance' => '',
+					'social'      => '',
+				]
+			);
 			return $dirty;
 		}
 
@@ -148,11 +178,11 @@ class Banner_Settings_Controller extends Menu_Controller {
 		update_option( 'termly_display_custom_map', $custom_map );
 
 		$custom_blocking_map = [
-			'essential'   => isset( $dirty['blocking_map_essential'] ) ? sanitize_textarea_field( $dirty['blocking_map_essential'] )    : '',
-			'advertising' => isset( $dirty['blocking_map_advertising'] ) ? sanitize_textarea_field( $dirty['blocking_map_advertising'] ): '',
-			'analytics'   => isset( $dirty['blocking_map_analytics'] ) ? sanitize_textarea_field( $dirty['blocking_map_analytics'] )    : '',
-			'performance' => isset( $dirty['blocking_map_performance'] ) ? sanitize_textarea_field( $dirty['blocking_map_performance'] ): '',
-			'social'      => isset( $dirty['blocking_map_social'] ) ? sanitize_textarea_field( $dirty['blocking_map_social'] )          : '',
+			'essential'   => isset( $dirty['blocking_map_essential'] ) ? sanitize_textarea_field( wp_unslash( $dirty['blocking_map_essential'] ) ) : '',
+			'advertising' => isset( $dirty['blocking_map_advertising'] ) ? sanitize_textarea_field( wp_unslash( $dirty['blocking_map_advertising'] ) ) : '',
+			'analytics'   => isset( $dirty['blocking_map_analytics'] ) ? sanitize_textarea_field( wp_unslash( $dirty['blocking_map_analytics'] ) ) : '',
+			'performance' => isset( $dirty['blocking_map_performance'] ) ? sanitize_textarea_field( wp_unslash( $dirty['blocking_map_performance'] ) ) : '',
+			'social'      => isset( $dirty['blocking_map_social'] ) ? sanitize_textarea_field( wp_unslash( $dirty['blocking_map_social'] ) ) : '',
 		];
 		update_option( 'termly_custom_blocking_map', $custom_blocking_map );
 
@@ -173,9 +203,20 @@ class Banner_Settings_Controller extends Menu_Controller {
 			[
 				'methods'             => 'POST',
 				'callback'            => [ __CLASS__, 'handle_consent_toggle' ],
-				'permission_callback' => '__return_true',
+				'permission_callback' => [ __CLASS__, 'consent_toggle_permissions' ],
 			]
 		);
+
+	}
+
+	/**
+	 * Check if the user has the correct permissions.
+	 *
+	 * @return boolean
+	 */
+	public static function consent_toggle_permissions() {
+
+		return current_user_can( 'manage_options' );
 
 	}
 
@@ -187,7 +228,7 @@ class Banner_Settings_Controller extends Menu_Controller {
 	 */
 	public static function handle_consent_toggle( \WP_REST_Request $request ) {
 
-		if ( check_ajax_referer( 'termly-consent-toggle', '_wpnonce', false ) ) {
+		if ( check_ajax_referer( 'wp_rest', '_wpnonce', false ) ) {
 
 			$data = [
 				'success' => false,

@@ -14,9 +14,9 @@
 	"author": "Pixel Jar",
 	"license": "ISC",
 	"devDependencies": {
-		"@parcel/transformer-sass": "^2.9.3",
+		"@parcel/transformer-sass": "^2.12.0",
 		"node-sass": "^9.0.0",
-		"parcel": "^2.0.0",
-		"sass": "^1.65.1"
+		"parcel": "^2.12.0",
+		"sass": "^1.72.0"
 	}
 }

@@ -12,6 +12,11 @@ namespace termly;
  */
 class General_Settings_Model {
 
+	/**
+	 * Get the API Key.
+	 *
+	 * @return string
+	 */
 	public static function get_authorization() {
 
 		$api_key = get_option( 'termly_api_key' );

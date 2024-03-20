@@ -12,6 +12,11 @@ namespace termly;
  */
 class Cookie_Management_Controller extends Menu_Controller {
 
+	/**
+	 * Hooks into WordPress for this class.
+	 *
+	 * @return void
+	 */
 	public static function hooks() {
 
 		add_action( 'admin_menu', [ __CLASS__, 'menu' ] );
@@ -19,6 +24,11 @@ class Cookie_Management_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Register the menu.
+	 *
+	 * @return void
+	 */
 	public static function menu() {
 
 		add_submenu_page(
@@ -32,12 +42,23 @@ class Cookie_Management_Controller extends Menu_Controller {
 
 	}
 
+	/**
+	 * Render the menu page output.
+	 *
+	 * @return void
+	 */
 	public static function menu_page() {
 
 		require_once TERMLY_VIEWS . 'cookie-management.php';
 
 	}
 
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @param string $hook The current page hook.
+	 * @return void
+	 */
 	public static function scripts( $hook ) {
 
 		if ( 'termly_page_cookie-management' !== $hook ) {

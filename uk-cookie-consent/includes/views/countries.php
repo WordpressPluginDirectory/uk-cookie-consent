@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file contains the countries list.
+ *
+ * @package termly
+ */
 
 $country_list = [
 	''                                             => 'Please select',

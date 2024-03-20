@@ -25,7 +25,7 @@ class Site_Scan_Controller extends Menu_Controller {
 	public static function hooks() {
 
 		// Handle new scan request.
-		if ( array_key_exists( 'action', $_REQUEST ) && 'new-scan' === $_REQUEST['action'] ) {
+		if ( isset( $_REQUEST['action'] ) && 'new-scan' === sanitize_text_field( wp_unslash( $_REQUEST['action'] ) ) ) {
 
 			add_action( 'admin_init', [ get_called_class(), 'handle_new_scan_request' ] );
 

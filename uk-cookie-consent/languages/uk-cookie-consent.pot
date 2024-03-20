@@ -2,15 +2,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GDPR/CCPA Cookie Consent Banner\n"
-"POT-Creation-Date: 2023-09-08 09:02-0700\n"
-"PO-Revision-Date: 2023-09-08 09:02-0700\n"
+"POT-Creation-Date: 2024-03-14 11:01-0700\n"
+"PO-Revision-Date: 2024-03-14 11:01-0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: uk-cookie-consent.php\n"
@@ -22,269 +22,285 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: includes/controllers/class-app-controller.php:55
-#: includes/controllers/class-app-controller.php:56
+#: includes/controllers/class-app-controller.php:70
+#: includes/controllers/class-app-controller.php:71
 msgid "Account"
 msgstr ""
 
-#: includes/controllers/class-app-controller.php:75
-#: includes/views/upgrade-notice-sidebar.php:4
+#: includes/controllers/class-app-controller.php:103
+#: includes/views/upgrade-notice-sidebar.php:14
 msgid "Upgrade to Termly Pro"
 msgstr ""
 
-#: includes/controllers/class-app-controller.php:131
+#: includes/controllers/class-app-controller.php:164
 msgid ""
 "The Termly plugin has been reset and the Termly services have been "
 "disconnected."
 msgstr ""
 
-#: includes/controllers/class-banner-settings-controller.php:32
-#: includes/controllers/class-banner-settings-controller.php:33
+#: includes/controllers/class-banner-settings-controller.php:42
+#: includes/controllers/class-banner-settings-controller.php:43
 #: includes/views/banner-settings.php:38
-#: includes/views/consent-toggle-sidebar.php:36
+#: includes/views/consent-toggle-sidebar.php:40
 msgid "Banner Settings"
 msgstr ""
 
-#: includes/controllers/class-banner-settings-controller.php:88
+#: includes/controllers/class-banner-settings-controller.php:109
 msgid "The code snippet has been copied to your clipboard."
 msgstr ""
 
-#: includes/controllers/class-banner-settings-controller.php:89
+#: includes/controllers/class-banner-settings-controller.php:110
 msgid ""
 "The code snippet could not be copied to your clipboard. Please copy the "
 "script manually."
 msgstr ""
 
-#: includes/controllers/class-banner-settings-controller.php:193
+#: includes/controllers/class-banner-settings-controller.php:235
 msgid "Invalid nonce."
 msgstr ""
 
-#: includes/controllers/class-banner-settings-controller.php:203
+#: includes/controllers/class-banner-settings-controller.php:245
 msgid "Banner settings updated."
 msgstr ""
 
-#: includes/controllers/class-cookie-management-controller.php:26
-#: includes/controllers/class-cookie-management-controller.php:27
-#: includes/views/cookie-management.php:24
+#: includes/controllers/class-cookie-management-controller.php:36
+#: includes/controllers/class-cookie-management-controller.php:37
+#: includes/views/cookie-management.php:24 includes/views/site-scan.php:60
 msgid "Cookie Management"
 msgstr ""
 
-#: includes/controllers/class-edit-cookie.php:43
+#: includes/controllers/class-edit-cookie.php:48
 #: includes/views/edit-cookie.php:132
 msgid "Edit Cookie"
 msgstr ""
 
-#: includes/controllers/class-edit-cookie.php:140
-msgid "Please fill out all required fields"
+#: includes/controllers/class-edit-cookie.php:135
+msgid "There has been a security error. Please try again."
 msgstr ""
 
-#: includes/controllers/class-edit-cookie.php:214
+#: includes/controllers/class-edit-cookie.php:148
+msgid "Please fill out all required fields."
+msgstr ""
+
+#: includes/controllers/class-edit-cookie.php:209
+msgid "Cookie not found"
+msgstr ""
+
+#: includes/controllers/class-edit-cookie.php:224
 msgid "Cookie updated"
 msgstr ""
 
-#: includes/controllers/class-edit-cookie.php:222
+#: includes/controllers/class-edit-cookie.php:233
 msgid "Cookie update failed"
 msgstr ""
 
-#: includes/controllers/class-edit-cookie.php:248
+#: includes/controllers/class-edit-cookie.php:259
 msgid "Cookie added"
 msgstr ""
 
-#: includes/controllers/class-edit-cookie.php:262
+#: includes/controllers/class-edit-cookie.php:273
 msgid "Adding cookie failed"
 msgstr ""
 
-#: includes/controllers/class-policies-controller.php:25
-#: includes/controllers/class-policies-controller.php:26
+#: includes/controllers/class-policies-controller.php:35
+#: includes/controllers/class-policies-controller.php:36
 #: includes/views/policies.php:88
 msgid "Policies"
 msgstr ""
 
-#: includes/controllers/class-site-scan-controller.php:52
+#: includes/controllers/class-site-scan-controller.php:69
 msgid "Schedule Automatic Scans"
 msgstr ""
 
-#: includes/controllers/class-site-scan-controller.php:97
+#: includes/controllers/class-site-scan-controller.php:77
+msgid "Robots.txt"
+msgstr ""
+
+#: includes/controllers/class-site-scan-controller.php:130
 msgid "I want to automatically scan my website"
 msgstr ""
 
-#: includes/controllers/class-site-scan-controller.php:101
+#: includes/controllers/class-site-scan-controller.php:134
 msgid "Every 3 Months"
 msgstr ""
 
-#: includes/controllers/class-site-scan-controller.php:102
+#: includes/controllers/class-site-scan-controller.php:135
 msgid "Every Month"
 msgstr ""
 
-#: includes/controllers/class-site-scan-controller.php:103
+#: includes/controllers/class-site-scan-controller.php:136
 msgid "Every Week"
 msgstr ""
 
-#: includes/controllers/class-site-scan-controller.php:113
-#: includes/controllers/class-site-scan-controller.php:114
+#: includes/controllers/class-site-scan-controller.php:161
+msgid "Add Termly Scanner to robots.txt Allow list"
+msgstr ""
+
+#: includes/controllers/class-site-scan-controller.php:173
+#: includes/controllers/class-site-scan-controller.php:174
 #: includes/views/site-scan.php:25
 msgid "Site Scan"
 msgstr ""
 
-#: includes/controllers/class-site-scan-controller.php:211
+#: includes/controllers/class-site-scan-controller.php:288
 msgid "No Scans Available"
 msgstr ""
 
-#: includes/controllers/class-site-scan-controller.php:217
+#: includes/controllers/class-site-scan-controller.php:294
 #, php-format
 msgid "Last scanned on %s"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:109
+#: includes/controllers/class-site-scan-results-list-table.php:125
 msgid "No cookies found."
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:122
-#: includes/controllers/class-site-scan-results-list-table.php:352
+#: includes/controllers/class-site-scan-results-list-table.php:140
+#: includes/controllers/class-site-scan-results-list-table.php:372
 msgid "Delete Permanently"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:139
+#: includes/controllers/class-site-scan-results-list-table.php:157
 msgid "Cookie Name"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:140
+#: includes/controllers/class-site-scan-results-list-table.php:158
 msgid "Description"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:141
+#: includes/controllers/class-site-scan-results-list-table.php:159
 #: includes/views/edit-cookie.php:28
 msgid "Category"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:142
+#: includes/controllers/class-site-scan-results-list-table.php:160
 msgid "Domain"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:143
+#: includes/controllers/class-site-scan-results-list-table.php:161
 msgid "Status"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:233
+#: includes/controllers/class-site-scan-results-list-table.php:251
 msgid "Filter by category"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:259
+#: includes/controllers/class-site-scan-results-list-table.php:277
 msgid "Filter by domain"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:293
+#: includes/controllers/class-site-scan-results-list-table.php:313
 msgid "Filter"
 msgstr ""
 
 #. translators: %s: Cookie title.
-#: includes/controllers/class-site-scan-results-list-table.php:341
+#: includes/controllers/class-site-scan-results-list-table.php:361
 #, php-format
 msgid "Edit &#8220;%s&#8221;"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:342
+#: includes/controllers/class-site-scan-results-list-table.php:362
 msgid "Edit"
 msgstr ""
 
 #. translators: %s: Cookie title.
-#: includes/controllers/class-site-scan-results-list-table.php:351
+#: includes/controllers/class-site-scan-results-list-table.php:371
 #, php-format
 msgid "Delete &#8220;%s&#8221; permanently"
 msgstr ""
 
 #. translators: %s: Cookie name.
-#: includes/controllers/class-site-scan-results-list-table.php:384
+#: includes/controllers/class-site-scan-results-list-table.php:404
 #, php-format
 msgid "Select %s"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:424
+#: includes/controllers/class-site-scan-results-list-table.php:444
 msgid "Existing"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:429
+#: includes/controllers/class-site-scan-results-list-table.php:449
 msgid "New"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:577
+#: includes/controllers/class-site-scan-results-list-table.php:597
 msgid "The following cookie has been deleted"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:578
+#: includes/controllers/class-site-scan-results-list-table.php:598
 msgid "The following cookies have been deleted"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:591
+#: includes/controllers/class-site-scan-results-list-table.php:611
 msgid "Unable to delete the following cookie"
 msgstr ""
 
-#: includes/controllers/class-site-scan-results-list-table.php:592
+#: includes/controllers/class-site-scan-results-list-table.php:612
 msgid "Unable to delete the following cookies"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:26
+#: includes/controllers/class-termly-api-controller.php:44
 msgid "Site Name / URL"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:34
+#: includes/controllers/class-termly-api-controller.php:52
 msgid "API Key"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:46
+#: includes/controllers/class-termly-api-controller.php:64
 msgid "Business Information"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:73
+#: includes/controllers/class-termly-api-controller.php:106
 msgid "Disconnect Site"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:84
+#: includes/controllers/class-termly-api-controller.php:122
 msgid "First Name"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:85
+#: includes/controllers/class-termly-api-controller.php:123
 msgid "Enter your first name"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:88
+#: includes/controllers/class-termly-api-controller.php:126
 msgid "Last Name"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:89
+#: includes/controllers/class-termly-api-controller.php:127
 msgid "Enter your last name"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:92
+#: includes/controllers/class-termly-api-controller.php:130
 msgid "Email"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:93
+#: includes/controllers/class-termly-api-controller.php:131
 msgid "Enter your email address"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:96
+#: includes/controllers/class-termly-api-controller.php:134
 msgid "Password"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:97
+#: includes/controllers/class-termly-api-controller.php:135
 msgid "Enter your password"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:100
+#: includes/controllers/class-termly-api-controller.php:138
 msgid "Confirm Password"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:101
+#: includes/controllers/class-termly-api-controller.php:139
 msgid "Confirm your password"
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:110
+#: includes/controllers/class-termly-api-controller.php:148
 msgid ""
 "I want to receive news, feature updates, discounts, and offers from Termly."
 msgstr ""
 
-#: includes/controllers/class-termly-api-controller.php:118
+#: includes/controllers/class-termly-api-controller.php:156
 msgid ""
 "I acknowledge that I have read and agree to the <a href=\"https://termly.io/"
 "our-terms-of-use/?utm_source=termly_wp_plugin&utm_content=termly-sign-up\" "
@@ -293,58 +309,58 @@ msgid ""
 "target=\"_blank\">Privacy Policy</a>."
 msgstr ""
 
-#: includes/models/class-site-scan-model.php:40
+#: includes/models/class-site-scan-model.php:67
 msgid "Your scan settings have been successfully saved."
 msgstr ""
 
-#: includes/models/class-site-scan-model.php:45
+#: includes/models/class-site-scan-model.php:72
 msgid "Your scan settings have been successfully updated."
 msgstr ""
 
-#: includes/models/class-site-scan-model.php:52
-#: includes/models/class-termly-api-model.php:144
+#: includes/models/class-site-scan-model.php:79
+#: includes/models/class-termly-api-model.php:157
 msgid "The API Key entered is not valid."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:117
+#: includes/models/class-termly-api-model.php:130
 msgid "The API Key has been successfully saved."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:123
+#: includes/models/class-termly-api-model.php:136
 msgid "The API Key has been successfully updated."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:172
+#: includes/models/class-termly-api-model.php:185
 msgid "The API Key can not be empty."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:203
+#: includes/models/class-termly-api-model.php:223
 msgid "You must agree to the terms before creating an account."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:209
+#: includes/models/class-termly-api-model.php:229
 msgid "All text fields must be filled in completely."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:250
+#: includes/models/class-termly-api-model.php:270
 msgid ""
 "You have signed up successfully! You can now start scanning your website."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:278
+#: includes/models/class-termly-api-model.php:298
 msgid "Your account could not be created for the following reasons:"
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:329
+#: includes/models/class-termly-api-model.php:356
 msgid ""
 "You must agree to the update confirmation before updating your information."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:371
+#: includes/models/class-termly-api-model.php:398
 msgid "Your business information has been updated."
 msgstr ""
 
-#: includes/models/class-termly-api-model.php:404
+#: includes/models/class-termly-api-model.php:431
 msgid ""
 "Your business information could not be updated because the request "
 "encountered an error. Please try again shortly.."
@@ -448,11 +464,15 @@ msgstr ""
 msgid "id=\"termly-consent-preferences\">Consent Preferences</a>"
 msgstr ""
 
-#: includes/views/consent-toggle-sidebar.php:29
-msgid "Consent Banner"
+#: includes/views/consent-toggle-sidebar.php:16
+msgid "Settings saved."
 msgstr ""
 
 #: includes/views/consent-toggle-sidebar.php:33
+msgid "Consent Banner"
+msgstr ""
+
+#: includes/views/consent-toggle-sidebar.php:37
 msgid ""
 "Enable the consent banner to start notifying  visitors to your site of your "
 "tracking practices. Request consent before serving cookies and other "
@@ -707,7 +727,7 @@ msgid ""
 msgstr ""
 
 #: includes/views/sign-up-notice.php:11
-msgid "Your API key will be inserted automatically after signing up."
+msgid "Your API key will be entered automatically after you sign up."
 msgstr ""
 
 #: includes/views/sign-up.php:40 includes/views/sign-up.php:65
@@ -779,6 +799,10 @@ msgstr ""
 msgid "Cookie Scan Results"
 msgstr ""
 
+#: includes/views/site-scan.php:58
+msgid "After the scan is complete, you can view your cookie list by going to"
+msgstr ""
+
 #: includes/views/site-scan.php:65
 msgid "Site Scan Settings"
 msgstr ""
@@ -789,31 +813,31 @@ msgid ""
 "to keep your consent banner compliant."
 msgstr ""
 
-#: includes/views/upgrade-notice-sidebar.php:7
+#: includes/views/upgrade-notice-sidebar.php:17
 msgid "30 Day Money Back Guarantee"
 msgstr ""
 
-#: includes/views/upgrade-notice-sidebar.php:8
+#: includes/views/upgrade-notice-sidebar.php:18
 msgid "Multi-Language Support"
 msgstr ""
 
-#: includes/views/upgrade-notice-sidebar.php:9
+#: includes/views/upgrade-notice-sidebar.php:19
 msgid "Scheduled Cookie Scans"
 msgstr ""
 
-#: includes/views/upgrade-notice-sidebar.php:10
+#: includes/views/upgrade-notice-sidebar.php:20
 msgid "Scroll-to-Consent Functionality"
 msgstr ""
 
-#: includes/views/upgrade-notice-sidebar.php:11
+#: includes/views/upgrade-notice-sidebar.php:21
 msgid "More Customization and Automation Options"
 msgstr ""
 
-#: includes/views/upgrade-notice-sidebar.php:17
+#: includes/views/upgrade-notice-sidebar.php:27
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: includes/views/upgrade-notice-sidebar.php:21
+#: includes/views/upgrade-notice-sidebar.php:31
 msgid "Compare Plans"
 msgstr ""
 

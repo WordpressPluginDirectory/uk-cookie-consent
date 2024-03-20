@@ -19,31 +19,9 @@ class Account_API_Controller {
 	 */
 	public static function hooks() {
 
-		// Listen for remote updates.
-		add_action( 'rest_api_init', [ __CLASS__, 'add_rewrite_rule' ] );
-
 		// Schedule daily updates.
 		add_action( 'init', [ __CLASS__, 'maybe_schedule_cron' ] );
 		add_action( 'termly_account_update', [ __CLASS__, 'update_account_status' ] );
-
-	}
-
-	/**
-	 * Adds the rewrite rule for the account status endpoint.
-	 *
-	 * @return void
-	 */
-	public static function add_rewrite_rule() {
-
-		register_rest_route(
-			'termly/v1',
-			'account-status',
-			[
-				'methods'             => 'POST',
-				'callback'            => [ __CLASS__, 'update_account_status' ],
-				'permission_callback' => '__return_true',
-			]
-		);
 
 	}
 
@@ -54,7 +32,7 @@ class Account_API_Controller {
 	 */
 	public static function maybe_schedule_cron() {
 
-		if ( ! wp_next_scheduled( 'termly_account_update' ) || ( is_admin() && isset( $_REQUEST['update-account'] ) ) ) {
+		if ( ! wp_next_scheduled( 'termly_account_update' ) ) {
 
 			wp_schedule_event( time(), 'daily', 'termly_account_update' );
 
@@ -103,11 +81,11 @@ class Account_API_Controller {
 
 		} else {
 
-			return rest_ensure_response( [ 'message' => __( 'Failed to update account status.', 'uk-cookie-consent' ) ] );
+			return false;
 
 		}
 
-		return rest_ensure_response( [ 'message' => __( 'Account status updated.', 'uk-cookie-consent' ) ] );
+		return true;
 
 	}
 

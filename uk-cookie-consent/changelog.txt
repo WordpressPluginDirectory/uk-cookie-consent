@@ -1,3 +1,6 @@
+= 3.2.1 =
+* Fixed Broken Access Control security vulnerability.
+
 = 3.2 =
 * New: There is a new setting on the site scan page to add a specific allow line to an existing or virtual (provided by WordPress core) robots.txt file.
 * Update: Changed the text of the "allow" line in the robots.txt to accurately reflect the new scraper's name.

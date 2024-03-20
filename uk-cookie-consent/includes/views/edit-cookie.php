@@ -191,7 +191,7 @@ $fields = [
 
 									$value = $cookie ? esc_attr( $cookie->{ $name } ) : '';
 									if ( isset( $_POST[ $name ] ) ) {
-										$value = $_POST[ $name ];
+										$value = sanitize_text_field( wp_unslash( $_POST[ $name ] ) );
 									}
 
 									$input = sprintf(
@@ -206,7 +206,7 @@ $fields = [
 
 									$value = $cookie ? esc_attr( $cookie->{ $name } ) : '';
 									if ( isset( $_POST[ $name ] ) ) {
-										$value = $_POST[ $name ];
+										$value = sanitize_text_field( wp_unslash( $_POST[ $name ] ) );
 									}
 
 									$input = sprintf(
@@ -223,7 +223,7 @@ $fields = [
 
 									$option_value = $cookie ? esc_attr( $cookie->{ $name } ) : '';
 									if ( isset( $_POST[ $name ] ) ) {
-										$option_value = $_POST[ $name ];
+										$option_value = sanitize_text_field( wp_unslash( $_POST[ $name ] ) );
 									}
 
 									foreach ( $data['options'] as $key => $value ) {

@@ -1,9 +1,22 @@
 <?php
+/**
+ * This file contains the Termly API controller class.
+ *
+ * @package termly
+ */
 
 namespace termly;
 
+/**
+ * This class handles the Termly API.
+ */
 class Termly_API_Controller {
 
+	/**
+	 * Hooks into WordPress for this class.
+	 *
+	 * @return void
+	 */
 	public static function hooks() {
 
 		// Register our settings.
@@ -15,6 +28,11 @@ class Termly_API_Controller {
 
 	}
 
+	/**
+	 * Register the settings.
+	 *
+	 * @return void
+	 */
 	public static function register_settings() {
 
 		// Register the API Key Setting.
@@ -51,11 +69,21 @@ class Termly_API_Controller {
 
 	}
 
-	public static function empty_header( $args = [] ) {
+	/**
+	 * Output an empty header.
+	 *
+	 * @return void
+	 */
+	public static function empty_header() {
 		// No section title output.
 	}
 
-	public static function site_url_field( $args = [] ) {
+	/**
+	 * Output the site URL field.
+	 *
+	 * @return void
+	 */
+	public static function site_url_field() {
 		$website = \get_option( 'termly_website' );
 		?>
 		<div class="termly-account-page-field-wrapper">
@@ -64,7 +92,12 @@ class Termly_API_Controller {
 		<?php
 	}
 
-	public static function api_key_field( $args = [] ) {
+	/**
+	 * Output the API Key field.
+	 *
+	 * @return void
+	 */
+	public static function api_key_field() {
 		$api_key = get_option( 'termly_api_key', '' );
 		?>
 		<div class="termly-account-page-field-wrapper">
@@ -76,7 +109,12 @@ class Termly_API_Controller {
 		<?php
 	}
 
-	public static function business_info_field( $args = [] ) {
+	/**
+	 * Output the business info field.
+	 *
+	 * @return void
+	 */
+	public static function business_info_field() {
 		$user = wp_get_current_user();
 		?>
 		<div class="termly-form new-user">
@@ -122,9 +160,14 @@ class Termly_API_Controller {
 		<?php
 	}
 
-	public static function add_temporary_auth( $headers = [] ) {
+	/**
+	 * Add temporary auth for the API.
+	 *
+	 * @return array
+	 */
+	public static function add_temporary_auth() {
 
-		$temporary_api_key = $_REQUEST['termly_api_key'];
+		$temporary_api_key = sanitize_text_field( wp_unslash( $_REQUEST['termly_api_key'] ) );
 		return [
 			'Accept'        => 'application/vnd.wordpress-v1+json',
 			'Authorization' => sprintf( 'Bearer %s', $temporary_api_key ),
@@ -132,6 +175,12 @@ class Termly_API_Controller {
 
 	}
 
+	/**
+	 * Remove the auth from the headers.
+	 *
+	 * @param array $headers The headers for the request.
+	 * @return array
+	 */
 	public static function remove_auth( $headers = [] ) {
 
 		if ( isset( $headers['Authorization'] ) ) {
@@ -141,7 +190,15 @@ class Termly_API_Controller {
 
 	}
 
-	public static function maybe_json_body( $body, $endpoint, $verb, $url ) {
+	/**
+	 * Maybe JSON encode the body.
+	 *
+	 * @param array  $body The body for the request.
+	 * @param string $endpoint The endpoint for the request.
+	 * @param string $verb The verb for the request.
+	 * @return array
+	 */
+	public static function maybe_json_body( $body, $endpoint, $verb ) {
 
 		if ( in_array( $verb, [ 'PUT', 'POST' ], true ) ) {
 
@@ -153,7 +210,16 @@ class Termly_API_Controller {
 
 	}
 
-	public static function maybe_json_header( $headers, $endpoint, $body, $verb, $url ) {
+	/**
+	 * Maybe add the JSON header.
+	 *
+	 * @param array  $headers The headers for the request.
+	 * @param string $endpoint The endpoint for the request.
+	 * @param array  $body The body for the request.
+	 * @param string $verb The verb for the request.
+	 * @return array
+	 */
+	public static function maybe_json_header( $headers, $endpoint, $body, $verb ) {
 
 		if ( in_array( $verb, [ 'PUT', 'POST' ], true ) ) {
 
@@ -164,6 +230,14 @@ class Termly_API_Controller {
 		return $headers;
 	}
 
+	/**
+	 * Make a request to the Termly API.
+	 *
+	 * @param string $verb The verb for the request.
+	 * @param string $endpoint The endpoint for the request.
+	 * @param array  $body The body for the request.
+	 * @return array
+	 */
 	public static function call( $verb = 'GET', $endpoint = '', $body = [] ) {
 
 		$verb     = apply_filters( 'termly_api_verb', $verb, $endpoint, $body );

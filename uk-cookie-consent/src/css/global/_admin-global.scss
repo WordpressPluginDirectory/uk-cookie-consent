@@ -1031,6 +1031,63 @@
 	padding: 10px 20px 20px;
 	width: 100%;
 
+	#termly-consent-toggle-setting-error {
+		background-color: #f5fff5;
+		border: none;
+		border-radius: 3px;
+		display: none;
+		padding: 20px;
+		margin-bottom: 20px;
+		position: relative;
+		width: auto;
+
+		&:before {
+			background-image: none;
+			color: #6de398;
+			content: "\f12a";
+			font-family: "dashicons";
+			font-size: 22px;
+			height: 22px;
+			left: 22px;
+			position: absolute;
+			top: 22px;
+			width: 22px;
+		}
+
+		p {
+			margin: 0;
+			padding-left: 30px;
+		}
+
+		&.notice-error {
+			background-color: #fbeaea;
+
+			&:before {
+				background-image: none;
+				color: #dc3232;
+				content: "\f534";
+				font-family: "dashicons";
+				font-size: 22px;
+				height: 22px;
+				left: 22px;
+				top: 22px;
+				width: 22px;
+			}
+
+			p {
+				padding-left: 30px;
+			}
+		}
+
+		p {
+			margin-bottom: 20px;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
 	h2 {
 		color: #212529;
 		font-size: 1.4375rem;

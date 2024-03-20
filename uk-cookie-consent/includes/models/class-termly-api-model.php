@@ -12,9 +12,14 @@ namespace termly;
  */
 class Termly_API_Model {
 
+	/**
+	 * Store the business settings from the Termly API.
+	 *
+	 * @return void
+	 */
 	public static function store_business_settings_from_api() {
 
-		$termly_website = get_option( 'termly_website' );
+		$termly_website           = get_option( 'termly_website' );
 		$termly_business_settings = wp_parse_args(
 			(array) $termly_website,
 			[
@@ -42,13 +47,18 @@ class Termly_API_Model {
 				'state'             => $termly_business_settings['company_state'],
 				'city'              => $termly_business_settings['company_city'],
 				'postal_code'       => $termly_business_settings['company_zip'],
-				'agree_to_policies' => '1'
+				'agree_to_policies' => '1',
 			],
 			false
 		);
 
 	}
 
+	/**
+	 * Update the style data from the Termly API.
+	 *
+	 * @return void
+	 */
 	public static function update_style_data() {
 
 		$banner_key            = 'termly_banner';
@@ -87,6 +97,13 @@ class Termly_API_Model {
 
 	}
 
+	/**
+	 * Sanitize the API key.
+	 *
+	 * @param string $value The value to sanitize.
+	 *
+	 * @return string
+	 */
 	public static function sanitize_api_key( $value ) {
 
 		static $api_key_count = 0;
@@ -185,6 +202,13 @@ class Termly_API_Model {
 
 	}
 
+	/**
+	 * Sanitize the business info.
+	 *
+	 * @param array $value The value to sanitize.
+	 *
+	 * @return array
+	 */
 	public static function sanitize_business_info( $value ) {
 
 		static $business_info_count = 0;
@@ -195,7 +219,7 @@ class Termly_API_Model {
 
 			if ( ! isset( $value['agree_to_terms'] ) ) {
 
-				$type = 'error';
+				$type    = 'error';
 				$message = __( 'You must agree to the terms before creating an account.', 'uk-cookie-consent' );
 				$value   = [];
 
@@ -311,6 +335,13 @@ class Termly_API_Model {
 
 	}
 
+	/**
+	 * Sanitize the business settings.
+	 *
+	 * @param array $value The value to sanitize.
+	 *
+	 * @return array
+	 */
 	public static function sanitize_business_settings( $value ) {
 
 		static $business_settings_count = 0;

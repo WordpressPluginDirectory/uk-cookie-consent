@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file contains the Site Scan Results List Table class.
+ *
+ * @package termly
+ */
 
 namespace termly;
 
@@ -21,7 +26,7 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 	 */
 	public function prepare_items() {
 
-		// Handle delete action
+		// Handle delete action.
 		$this->handle_delete_action();
 
 		$columns  = $this->get_columns();
@@ -31,33 +36,40 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 		$data = $this->table_data();
 		usort( $data, [ &$this, 'sort_data' ] );
 
-		// Handle filtering by category
+		// Handle filtering by category.
 		if ( isset( $_GET['cookie-category'] ) && '0' !== $_GET['cookie-category'] ) {
-			$data = array_filter( $data, function( $cookie ) {
-				$category = sanitize_text_field( $_GET['cookie-category'] );
-				return $cookie->category === $category;
-			} );
+			$data = array_filter(
+				$data,
+				function ( $cookie ) {
+					$category = sanitize_text_field( wp_unslash( $_GET['cookie-category'] ) );
+					return $cookie->category === $category;
+				}
+			);
 		}
 
-		// Handle filtering by domain
+		// Handle filtering by domain.
 		if ( isset( $_GET['cookie-domain'] ) && '0' !== $_GET['cookie-domain'] ) {
-			$data = array_filter( $data, function( $cookie ) {
-				$domain = sanitize_text_field( $_GET['cookie-domain'] );
-				return $cookie->domain === $domain;
-			} );
+			$data = array_filter(
+				$data,
+				function ( $cookie ) {
+					$domain = sanitize_text_field( wp_unslash( $_GET['cookie-domain'] ) );
+					return $cookie->domain === $domain;
+				}
+			);
 		}
 
-		// Handle searching
+		// Handle searching.
 		if ( isset( $_GET['s'] ) && '' !== $_GET['s'] ) {
 
-			$query = sanitize_text_field( $_GET['s'] );
+			$query = sanitize_text_field( wp_unslash( $_GET['s'] ) );
 
-			// Start an array for the search results
+			// Start an array for the search results.
 			$search_results = [];
 
-			// Loop through the data and add string matches to search results
+			// Loop through the data and add string matches to search results.
 			foreach ( $data as $item ) {
-				// Test name, description, category, and domain
+
+				// Test name, description, category, and domain.
 				if (
 					self::search_for_string( $query, $item->name ) ||
 					self::search_for_string( $query, $item->en_us ) ||
@@ -66,6 +78,7 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 				) {
 					$search_results[] = $item;
 				}
+
 			}
 
 			$data = $search_results;
@@ -93,6 +106,8 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 	}
 
 	/**
+	 * Check if there are items to display.
+	 *
 	 * @return bool
 	 */
 	public function has_items() {
@@ -103,6 +118,7 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 	}
 
 	/**
+	 * Message to be displayed when there are no items.
 	 */
 	public function no_items() {
 
@@ -111,6 +127,8 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 	}
 
 	/**
+	 * Get the bulk actions.
+	 *
 	 * @return array
 	 */
 	protected function get_bulk_actions() {
@@ -164,7 +182,7 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 	public function get_sortable_columns() {
 
 		return [
-			'name' => [
+			'name'     => [
 				'name',
 				false,
 			],
@@ -172,11 +190,11 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 				'category',
 				false,
 			],
-			'domain' => [
+			'domain'   => [
 				'domain',
 				false,
 			],
-			'new' => [
+			'new'      => [
 				'new',
 				false,
 			],
@@ -223,14 +241,14 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 	 */
 	protected function categories_dropdown() {
 
-		// This field ensures that the page is correct
+		// This field ensures that the page is correct.
 		echo '<input name="page" value="cookie-management" type="hidden">';
 
 		$data       = self::table_data();
 		$categories = array_unique( wp_list_pluck( $data, 'category' ) );
 		sort( $categories );
 
-		echo '<label class="screen-reader-text" for="cookie-category">' . __( 'Filter by category', 'uk-cookie-consent' ) . '</label>';
+		echo '<label class="screen-reader-text" for="cookie-category">' . esc_html__( 'Filter by category', 'uk-cookie-consent' ) . '</label>';
 		echo '<select name="cookie-category">';
 		echo '<option value="0">All Categories</option>';
 		foreach ( $categories as $category ) {
@@ -238,7 +256,7 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 			printf(
 				'<option value="%s" %s>%s</option>',
 				esc_attr( $category ),
-				selected( isset( $_GET['cookie-category'] ) && $_GET['cookie-category'] === $category, true, false ),
+				selected( ( isset( $_GET['cookie-category'] ) && sanitize_text_field( wp_unslash( $_GET['cookie-category'] ) ) === $category ), true, false ),
 				esc_html( ucwords( implode( ' ', explode( '_', $category ) ) ) )
 			);
 
@@ -256,7 +274,7 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 		$domains = array_unique( wp_list_pluck( $data, 'domain' ) );
 		sort( $domains );
 
-		echo '<label class="screen-reader-text" for="cookie-domain">' . __( 'Filter by domain', 'uk-cookie-consent' ) . '</label>';
+		echo '<label class="screen-reader-text" for="cookie-domain">' . esc_html__( 'Filter by domain', 'uk-cookie-consent' ) . '</label>';
 		echo '<select name="cookie-domain">';
 		echo '<option value="0">All Domains</option>';
 		foreach ( $domains as $domain ) {
@@ -264,7 +282,7 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 			printf(
 				'<option value="%s" %s>%s</option>',
 				esc_attr( $domain ),
-				selected( isset( $_GET['cookie-domain'] ) && $_GET['cookie-domain'] === $domain, true, false ),
+				selected( ( isset( $_GET['cookie-domain'] ) && sanitize_text_field( wp_unslash( $_GET['cookie-domain'] ) ) === $domain ), true, false ),
 				esc_html( $domain )
 			);
 
@@ -274,7 +292,9 @@ class Site_Scan_Results_List_Table extends \WP_List_Table {
 	}
 
 	/**
-	 * @param string $which
+	 * Handles the display of the search box.
+	 *
+	 * @param string $which The location of the extra table nav markup: 'top' or 'bottom'.
 	 */
 	protected function extra_tablenav( $which ) {
 		?>

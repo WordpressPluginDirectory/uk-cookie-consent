@@ -12,6 +12,11 @@ namespace termly;
  */
 class Menu_Controller {
 
+	/**
+	 * Hooks into WordPress for this class.
+	 *
+	 * @return void
+	 */
 	public static function hooks() {
 
 		// Register Submenus by extending this class.

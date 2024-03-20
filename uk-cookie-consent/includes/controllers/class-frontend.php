@@ -1,9 +1,22 @@
 <?php
+/**
+ * This class handles the frontend functionality.
+ *
+ * @package termly
+ */
 
 namespace termly;
 
+/**
+ * This class handles the frontend functionality.
+ */
 class Frontend {
 
+	/**
+	 * Hooks into WordPress for this class.
+	 *
+	 * @return void
+	 */
 	public static function hooks() {
 
 		// Embed the snippet.
@@ -11,6 +24,11 @@ class Frontend {
 
 	}
 
+	/**
+	 * Embed the snippet.
+	 *
+	 * @return void
+	 */
 	public static function embed_banner() {
 
 		$display_banner = get_option( 'termly_display_banner', 'no' );
@@ -24,7 +42,18 @@ class Frontend {
 
 		if ( 'on' === $custom_map ) {
 
-			$custom_blocking_map = get_option( 'termly_custom_blocking_map', [ 'essential' => '', 'advertising' => '', 'analytics' => '', 'performance' => '', 'social' => '' ] );
+			$custom_blocking_map = get_option( 'termly_custom_blocking_map' );
+			$custom_blocking_map = wp_parse_args(
+				$custom_blocking_map,
+				[
+					'essential'   => '',
+					'advertising' => '',
+					'analytics'   => '',
+					'performance' => '',
+					'social'      => '',
+				]
+			);
+
 			printf(
 				'<script data-termly-config>
 					window.TERMLY_CUSTOM_BLOCKING_MAP = {

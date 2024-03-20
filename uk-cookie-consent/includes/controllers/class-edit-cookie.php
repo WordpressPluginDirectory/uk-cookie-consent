@@ -62,8 +62,10 @@ class Edit_Cookie {
 	 */
 	public static function edit_page_view() {
 
+		$status = [];
+
 		// Handle editing or adding a cookie if there is an action set in the request.
-		if ( isset( $_REQUEST['action'] ) ) {
+		if ( isset( $_REQUEST['_wpnonce'], $_REQUEST['action'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'termly_cookie_nonce' ) ) {
 			$status = self::handle_crud();
 		}
 
@@ -76,9 +78,9 @@ class Edit_Cookie {
 
 		// If a cookie has been added, an additional
 		// array value is added which is the cookie id.
-		if ( isset( $status ) && 3 === count( $status ) ) {
+		if ( isset( $status ) && is_array( $status ) && 3 === count( $status ) ) {
 			$cookie_id = $status[2];
-			$editing = true;
+			$editing   = true;
 		}
 
 		// By default, cookie is set to false.
@@ -128,7 +130,10 @@ class Edit_Cookie {
 	public static function handle_crud() {
 
 		if ( ! isset( $_REQUEST['_wpnonce'], $_REQUEST['action'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'termly_cookie_nonce' ) ) {
-			die();
+			return [
+				'error',
+				__( 'There has been a security error. Please try again.', 'uk-cookie-consent' ),
+			];
 		}
 
 		$action = sanitize_text_field( wp_unslash( $_REQUEST['action'] ) );
@@ -140,7 +145,7 @@ class Edit_Cookie {
 			if ( ! isset( $_REQUEST[ $field ] ) || '' === $_REQUEST[ $field ] ) {
 				return [
 					'error',
-					__( 'Please fill out all required fields', 'uk-cookie-consent' ),
+					__( 'Please fill out all required fields.', 'uk-cookie-consent' ),
 				];
 			}
 		}
@@ -197,15 +202,16 @@ class Edit_Cookie {
 			unset( $args[ $field ] );
 		}
 
-		if ( ! isset( $_REQUEST['cookie_id'] ) ) {
+		// Already processed nonce in handle_crud method.
+		if ( ! isset( $_REQUEST['cookie_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return [
 				'error',
 				__( 'Cookie not found', 'uk-cookie-consent' ),
 			];
 		}
 
-		// Get the cookie ID.
-		$cookie_id = intval( $_REQUEST['cookie_id'] );
+		// Get the cookie ID - already processed nonce in handle_crud method.
+		$cookie_id = intval( wp_unslash( $_REQUEST['cookie_id'] ) ); // phpcs:ignore WordPress.Security.NonceVerification
 
 		// PUT request to the API.
 		$response = Termly_API_Controller::call( 'PUT', 'cookies/' . $cookie_id, $args );
@@ -253,8 +259,8 @@ class Edit_Cookie {
 				__( 'Cookie added', 'uk-cookie-consent' ),
 			];
 
-			// If not adding another, set cookie id to go to edit screen.
-			if ( isset( $_REQUEST['submit'] ) && 'add_another' !== sanitize_text_field( wp_unslash( $_REQUEST['submit'] ) ) ) {
+			// If not adding another, set cookie id to go to edit screen - already processed nonce in handle_crud method.
+			if ( isset( $_REQUEST['submit'] ) && 'add_another' !== sanitize_text_field( wp_unslash( $_REQUEST['submit'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 				$success[] = intval( $cookie_id );
 			}
 

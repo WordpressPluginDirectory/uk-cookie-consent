@@ -1,4 +1,9 @@
 <?php
+/**
+ * This file contains the upgrade notice sidebar.
+ *
+ * @package termly
+ */
 
 $termly_api_key = get_option( 'termly_api_key', false );
 if ( false === $termly_api_key || empty( $termly_api_key ) || termly\Account_API_Controller::is_free() ) {

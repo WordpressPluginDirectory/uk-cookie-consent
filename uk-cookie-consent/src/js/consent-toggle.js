@@ -15,6 +15,7 @@ async function toggle_consent_banner( e ) {
 			cache: 'no-cache',
 			'headers': {
 				'Content-Type': 'application/json',
+				'X-WP-Nonce': termly_consent_toggle.nonce,
 			},
 			body: JSON.stringify(
 				{
@@ -28,6 +29,15 @@ async function toggle_consent_banner( e ) {
 
 		// Disable checkbox until we hear back from the server.
 		e.target.disabled = false;
+
+		// If the request was successful, update the UI.
+		if ( response.success ) {
+
+			console.log( document.getElementById( 'termly-consent-toggle-setting-error' ) );
+
+			document.getElementById( 'termly-consent-toggle-setting-error' ).style.display = 'block';
+
+		}
 
 	} );
 

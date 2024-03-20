@@ -3,7 +3,7 @@
  * Plugin Name: GDPR/CCPA Cookie Consent Banner
  * Plugin URI: https://termly.io/products/
  * Description: Our easy to use cookie consent plugin can assist in your GDPR and ePrivacy Directive compliance efforts.
- * Version: 3.2
+ * Version: 3.2.1
  * Author: Termly
  * Author URI: https://termly.io/
  * License: GPL2
@@ -32,15 +32,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Check for minimum PHP Version.
-if ( ! function_exists( 'is_php_version_compatible' ) || ! is_php_version_compatible( '5.3.0' ) ) {
+if ( ! function_exists( 'is_php_version_compatible' ) || ! is_php_version_compatible( '7.4.0' ) ) {
 
 	add_action(
 		'admin_notices',
-		function() {
+		function () {
 
 			$class   = 'notice notice-error';
 			$message = __( 'Your site does not meet the minimum PHP version to run this plugin.', 'uk-cookie-consent' );
-			echo sprintf(
+			printf(
 				'<div class="%s"><p>%s</p></div>',
 				esc_attr( $class ),
 				esc_html( $message )
@@ -57,11 +57,11 @@ if ( ! function_exists( 'is_wp_version_compatible' ) || ! is_wp_version_compatib
 
 	add_action(
 		'admin_notices',
-		function() {
+		function () {
 
 			$class   = 'notice notice-error';
 			$message = __( 'Your site does not meet the minimum WordPress version to run this plugin.', 'uk-cookie-consent' );
-			echo sprintf(
+			printf(
 				'<div class="%s"><p>%s</p></div>',
 				esc_attr( $class ),
 				esc_html( $message )
@@ -77,7 +77,7 @@ if ( ! function_exists( 'is_wp_version_compatible' ) || ! is_wp_version_compatib
 define( 'TERMLY_FILE', __FILE__ );
 define( 'TERMLY_BASENAME', plugin_basename( __FILE__ ) );
 define( 'TERMLY_API_BASE', 'https://app.termly.io/api' );
-define( 'TERMLY_VERSION', '3.2' );
+define( 'TERMLY_VERSION', '3.2.1' );
 define( 'TERMLY_URL', plugin_dir_url( __FILE__ ) );
 define( 'TERMLY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'TERMLY_LANG', TERMLY_PATH . 'lang/' );
@@ -89,7 +89,7 @@ define( 'TERMLY_HELPERS', TERMLY_INC . 'helpers/' );
 define( 'TERMLY_DIST', TERMLY_URL . 'dist/' );
 
 // Common Files.
-require_once TERMLY_HELPERS . 'class-url-helpers.php';
+require_once TERMLY_HELPERS . 'class-urls.php';
 require_once TERMLY_INC . 'class-internationalization.php';
 require_once TERMLY_MODELS . 'class-general-settings-model.php';
 require_once TERMLY_CONTROLLERS . 'class-menu-controller.php';
