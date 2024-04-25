@@ -42,6 +42,8 @@ class Frontend {
 
 		if ( 'on' === $custom_map ) {
 
+			$map_items = [];
+
 			$custom_blocking_map = get_option( 'termly_custom_blocking_map' );
 			$custom_blocking_map = wp_parse_args(
 				$custom_blocking_map,
@@ -54,21 +56,32 @@ class Frontend {
 				]
 			);
 
+			foreach ( $custom_blocking_map as $key => $value ) {
+
+				$custom_urls = explode( ',', $value );
+				if ( is_array( $custom_urls ) && count( $custom_urls ) > 1 && ! empty( $custom_urls[0] ) ) {
+
+					foreach ( $custom_urls as $custom_url ) {
+
+						$map_items[] = sprintf(
+							'"%s": "%s"',
+							esc_js( trim( $custom_url ) ),
+							esc_js( $key )
+						);
+
+					}
+
+				}
+
+			}
+
 			printf(
 				'<script data-termly-config>
 					window.TERMLY_CUSTOM_BLOCKING_MAP = {
-						"%s": "essential",
-						"%s": "advertising",
-						"%s": "analytics",
-						"%s": "performance",
-						"%s": "social_networking"
+						%s
 					}
 				</script>',
-				esc_js( $custom_blocking_map['essential'] ),
-				esc_js( $custom_blocking_map['advertising'] ),
-				esc_js( $custom_blocking_map['analytics'] ),
-				esc_js( $custom_blocking_map['performance'] ),
-				esc_js( $custom_blocking_map['social'] )
+				implode( ', ', $map_items ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			);
 
 		}

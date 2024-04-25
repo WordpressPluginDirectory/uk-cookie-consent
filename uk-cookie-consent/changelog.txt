@@ -1,3 +1,6 @@
+= 3.2.2 =
+* Updated the Custom Blocking Map functionality to correctly output the entered domains in their correct categories.
+
 = 3.2.1 =
 * Fixed Broken Access Control security vulnerability.
 

@@ -3,8 +3,8 @@ Contributors: termly, pixeljar, brandondove, nateconley, jeffreyzinn
 Tags: cookie law, cookie consent, gdpr, eu privacy directive, cookie banner, cookie compliance, cookie notice, eu cookie law, cookie notification, cookies, wpml, geo ip
 Requires at least: 5.2
 Requires PHP: 5.6
-Tested up to: 6.2
-Stable tag: 3.2.1
+Tested up to: 6.5.2
+Stable tag: 3.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,9 @@ The free plan has a 10,000 monthly unique visitor limit to your consent banner. 
 9. Enable/disable your consent banner with a single click within WordPress. Easily control whether or not the Auto Blocker is enabled.
 
 == Changelog ==
+
+= 3.2.2 =
+* Updated the Custom Blocking Map functionality to correctly output the entered domains in their correct categories.
 
 = 3.2.1 =
 * Fixed Broken Access Control security vulnerability.
