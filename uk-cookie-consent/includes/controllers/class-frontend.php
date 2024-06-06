@@ -59,7 +59,7 @@ class Frontend {
 			foreach ( $custom_blocking_map as $key => $value ) {
 
 				$custom_urls = explode( ',', $value );
-				if ( is_array( $custom_urls ) && count( $custom_urls ) > 1 && ! empty( $custom_urls[0] ) ) {
+				if ( is_array( $custom_urls ) && count( $custom_urls ) > 0 && ! empty( $custom_urls[0] ) ) {
 
 					foreach ( $custom_urls as $custom_url ) {
 
