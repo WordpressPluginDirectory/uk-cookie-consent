@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: GDPR/CCPA Cookie Consent Banner
+ * Plugin Name: Termly - GDPR/CCPA Cookie Consent Banner
  * Plugin URI: https://termly.io/products/
- * Description: Our easy to use cookie consent plugin can assist in your GDPR and ePrivacy Directive compliance efforts.
- * Version: 3.2.3
- * Author: Termly
+ * Description: Our easy to use cookie consent plugin can assist in your GDPR, CCPA, and ePrivacy Directive compliance efforts.
+ * Version: 3.3.0
+ * Author: Termly - GDPR/CCPA Cookie Consent Banner
  * Author URI: https://termly.io/
  * License: GPL2
  * Text Domain: uk-cookie-consent
@@ -191,4 +191,9 @@ if ( false === $termly_api_key || empty( $termly_api_key ) ) {
 	require_once TERMLY_CONTROLLERS . 'class-banner-settings-controller.php';
 	require_once TERMLY_CONTROLLERS . 'class-policies-controller.php';
 
+}
+
+// WP-CLI.
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once TERMLY_CONTROLLERS . 'class-wp-cli.php';
 }

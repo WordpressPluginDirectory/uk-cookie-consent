@@ -200,6 +200,7 @@ $blocking_map = get_option(
 
 			<?php require TERMLY_VIEWS . 'consent-toggle-sidebar.php'; ?>
 			<?php require TERMLY_VIEWS . 'upgrade-notice-sidebar.php'; ?>
+			<?php require TERMLY_VIEWS . 'review-notice-sidebar.php'; ?>
 
 		</div>
 

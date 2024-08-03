@@ -42,12 +42,13 @@ class Urls {
 
 		return add_query_arg(
 			[
+				'upgrade'      => 'wp_plugin',
 				'utm_source'   => 'termly_wp_plugin',
 				'utm_medium'   => 'notice',
 				'utm_campaign' => $campaign,
 				'utm_content'  => $campaign,
 			],
-			'https://app.termly.io/user/products'
+			'https://termly.io/pricing'
 		);
 
 	}
@@ -62,12 +63,24 @@ class Urls {
 
 		return add_query_arg(
 			[
+				'upgrade'      => 'wp_plugin',
 				'utm_source'   => 'wordpress',
 				'utm_medium'   => 'notice',
 				'utm_campaign' => $campaign,
 			],
-			'https://app.termly.io/user/products'
+			'https://termly.io/pricing'
 		);
+
+	}
+
+	/**
+	 * Get the WordPress.org review URL.
+	 *
+	 * @return string
+	 */
+	public static function get_review_url() {
+
+		return 'https://wordpress.org/support/plugin/uk-cookie-consent/reviews/#new-post';
 
 	}
 

@@ -1023,7 +1023,8 @@
 
 // Upgrade sidebar
 .termly-upgrade-sidebar,
-.termly-consent-sidebar {
+.termly-consent-sidebar,
+.termly-review-sidebar {
 	background-color: #ffffff;
 	box-shadow: 0 0 10px rgba(0,0,0,0.1);
 	margin-bottom: 20px;
@@ -1114,6 +1115,20 @@
 				width: 20px;
 			}
 		}
+	}
+
+	.termly-stars {
+		margin-bottom: 0;
+
+		.dashicons-star-filled {
+			padding-right: 5px;
+
+			&:before {
+				color: #2dd1a4;
+				font-size: 1.475rem;
+			}
+		}
+
 	}
 
 	.upgrade-plan-links {
