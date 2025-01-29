@@ -11,13 +11,13 @@ if ( false !== $termly_api_key && !empty( $termly_api_key ) && ! termly\Account_
 	?>
 <div class="termly-review-sidebar">
 
-	<h2><?php esc_html_e( 'Enjoy Using Termly?', 'uk-cookie-consent' ); ?></h2>
+	<h2><?php esc_html_e( 'Enjoy using Termly?', 'uk-cookie-consent' ); ?></h2>
 
 	<p>
 		<?php
 		printf(
 			'%s <a href="%s" target="_blank">%s</a>.',
-			esc_html_e( 'Please take a few seconds to', 'uk-cookie-consent' ),
+			esc_html__( 'Please take a few seconds to', 'uk-cookie-consent' ),
 			esc_attr( termly\Urls::get_review_url() ),
 			esc_html__( 'rate us on WordPress.org', 'uk-cookie-consent' )
 		);

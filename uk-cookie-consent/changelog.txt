@@ -1,3 +1,12 @@
+= 3.3.1 =
+* Minor UI changes.
+* New Termly x WP Rocket partnership to improve site performance.
+
+= 3.3.0 =
+* Added WP-CLI Commands to administer the plugin programmatically.
+* Added informational panel for users with paid accounts.
+* Updated plugin name, tagging, author, and description.
+
 = 3.2.3 =
 * Updated the Custom Blocking Map functionality to better handle domains.
 

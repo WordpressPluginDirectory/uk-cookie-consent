@@ -30,7 +30,7 @@ $display_banner = ( 'yes' === get_option( 'termly_display_banner', 'no' ) );
 			<span class="toggle-track">
 				<span class="toggle-indicator"></span>
 			</span>
-			<?php esc_html_e( 'Consent Banner', 'uk-cookie-consent' ); ?>
+			<span class="title"><?php esc_html_e( 'Consent banner', 'uk-cookie-consent' ); ?></span>
 		</label>
 	</div>
 
